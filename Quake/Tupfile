@@ -1,0 +1,14 @@
+include_rules
+
+# Windows-specific and unused libs.
+EXCLUDES=^_win.c ^_wins.c ^_wipx.c
+
+# Unused libs.
+EXCLUDES+=^mpg123.c ^cd_null.c ^lodepng.c
+
+: foreach *.c $(EXCLUDES) |> !cc |> {objs}
+: foreach snd/legacy/*.c ^mpg123.c |> !cc |> snd/legacy/%B.o {objs}
+: foreach snd/*.c |> !cc |> snd/%B.o {objs}
+: foreach snd/hrtf/*.c |> !ccstrict |> snd/hrtf/%B.o {objs}
+
+: {objs} |> cc %f $(LDFLAGS) -o %o |> ../ironwail

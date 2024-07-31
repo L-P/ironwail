@@ -1,0 +1,18 @@
+root=$(TUP_CWD)
+
+CFLAGS=-DDEBUG -c -std=gnu11 \
+	-Wall -Wno-unused-parameter -Werror=format \
+	-Og -gdwarf-5 -g3 -fweb -frename-registers \
+	-D_FILE_OFFSET_BITS=64 -D_REENTRANT \
+	-DUSE_SDL2 -DUSE_CODEC_WAVE -DUSE_CODEC_VORBIS -DUSE_CODEC_MP3 \
+	-DUSE_STEAM_AUDIO \
+	-isystem $(root)/steamaudio/include \
+	-isystem /usr/include/SDL2
+
+CFLAGS_STRICT=-Wextra -Wpedantic $(CFLAGS)
+
+LDFLAGS=-lGL -lm -lcurl -lvorbisfile -lvorbis -logg -lmad -lSDL2 \
+	-L../steamaudio/lib/linux-x64 -lphonon
+
+!cc = |> cc $(CFLAGS) -o %o %f |> %B.o
+!ccstrict = |> cc $(CFLAGS_STRICT) -o %o %f |> %B.o

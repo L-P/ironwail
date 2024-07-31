@@ -1,8 +1,12 @@
+/.tup
+/history.txt
+/steamaudio
+Quake/**/*.d
+Quake/**/*.o
+Quake/*.exe
+Quake/*.res
+Quake/ironwail
 Windows/VisualStudio/.vs/
 Windows/VisualStudio/Build-*/
 Windows/VisualStudio/ironwail.vcxproj.user
-Quake/*.o
-Quake/*.d
-Quake/*.res
-Quake/*.exe
-Quake/ironwail
+gdb.txt

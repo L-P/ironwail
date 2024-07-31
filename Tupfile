@@ -1,0 +1,11 @@
+TAG_PATHS=\
+	Quake/*.c  \
+	Quake/*.h  \
+	Quake/snd/*.c \
+	Quake/snd/*.h \
+	Quake/snd/hrtf/*.c \
+	Quake/snd/hrtf/*.h \
+	Quake/snd/legacy/*.c \
+	Quake/snd/legacy/*.h
+
+: $(TAG_PATHS) |> ctags-exuberant %f |> tags

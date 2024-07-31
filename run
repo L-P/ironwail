@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+set -eu
+
+commands="$(mktemp --suffix .gdb_cmds)"
+cat > "$commands" <<EOF
+file Quake/ironwail
+set args +developer 1 $@
+set print pretty on
+set print object
+set max-value-size 600000
+set logging enabled on
+run
+EOF
+
+gdb -x "$commands"
+rm -f "$commands"

@@ -11,4 +11,4 @@ EXCLUDES+=^mpg123.c ^cd_null.c ^lodepng.c
 : foreach snd/*.c |> !cc |> snd/%B.o {objs}
 : foreach snd/hrtf/*.c |> !ccstrict |> snd/hrtf/%B.o {objs}
 
-: {objs} |> cc %f $(LDFLAGS) -o %o |> ../ironwail
+: {objs} |> cc %f $(LDFLAGS) -o %o |> ironwail

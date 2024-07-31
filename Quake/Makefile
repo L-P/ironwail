@@ -4,6 +4,8 @@
 # "make SDL_CONFIG=/path/to/sdl-config" for unusual SDL installations.
 # "make DO_USERDIRS=1" to enable user directories support
 
+STEAMAUDIO_URL=https://github.com/ValveSoftware/steam-audio/releases/download/v4.5.3/steamaudio_4.5.3.zip
+
 # Enable/Disable user directories support
 DO_USERDIRS=0
 
@@ -175,6 +177,9 @@ ifeq ($(USE_CODEC_UMX),1)
 CFLAGS+= -DUSE_CODEC_UMX
 endif
 
+CFLAGS+= -I../steamaudio/include -DUSE_STEAM_AUDIO
+CODECLIBS+= -L../steamaudio/lib/linux-x64 -lphonon
+
 ifeq ($(HOST_OS),haiku)
 COMMON_LIBS= -lGL
 else
@@ -191,6 +196,11 @@ MAKEFILE := $(lastword $(MAKEFILE_LIST))
 # ---------------------------
 
 MUSIC_OBJS= \
+	snd/hrtf/bgm.o \
+	snd/hrtf/driver.o \
+	snd/hrtf/ipl.o \
+	snd/hrtf/mixer.o \
+	snd/hrtf/util.o \
 	snd/iface.o \
 	snd/legacy/bgmusic.o \
 	snd/legacy/codec.o \
@@ -290,7 +300,13 @@ OBJS += $(SYSOBJ_RES)
 .PHONY:	clean debug release
 
 DEFAULT_TARGET = ironwail
-all: $(DEFAULT_TARGET)
+all: $(DEFAULT_TARGET) ../steamaudio
+
+../steamaudio:
+	mkdir -p "$@"
+	curl -SsL "$(STEAMAUDIO_URL)" > "$@.zip"
+	unzip -d .. "$@.zip"
+	rm -f "$@.zip"
 
 %.d:	%.c $(MAKEFILE)
 	@echo "Generating dependencies for $<" && \

@@ -36,7 +36,12 @@ void SND_SetDriver(snd_iface_t impl) {
 }
 
 void S_Init(void) {
+	// TODO: allow switching implementations during startup.
+#ifdef USE_STEAM_AUDIO
+	SND_SetDriver(snd_new_hrtf_impl());
+#else
 	SND_SetDriver(snd_new_legacy_impl());
+#endif
 
 	Cvar_RegisterVariable(&ambient_fade);
 	Cvar_RegisterVariable(&ambient_level);

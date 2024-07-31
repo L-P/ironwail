@@ -18,12 +18,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_MIKMOD)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_mikmod.h"
+#include "codec.h"
+#include "codeci.h"
+#include "mikmod.h"
 #include <mikmod.h>
 
 #if ((LIBMIKMOD_VERSION+0) < 0x030105)

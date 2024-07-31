@@ -22,13 +22,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(SDL_FRAMEWORK) || defined(NO_SDL_CONFIG)
 #include <SDL2/SDL.h>
 #else
 #include "SDL.h"
 #endif
+
+#include "../iface.h"
 
 static int	buffersize;
 
@@ -200,4 +202,3 @@ void SNDDMA_UnblockSound (void)
 {
 	SDL_PauseAudio(0);
 }
-

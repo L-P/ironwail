@@ -22,12 +22,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_UMX)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_umx.h"
+#include "codec.h"
+#include "codeci.h"
+#include "umx.h"
 
 typedef int32_t fci_t;		/* FCompactIndex */
 

@@ -21,12 +21,12 @@
  *
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_VORBIS)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_vorbis.h"
+#include "codec.h"
+#include "codeci.h"
+#include "vorbis.h"
 
 #define OV_EXCLUDE_STATIC_CALLBACKS
 #if defined(VORBIS_USE_TREMOR)

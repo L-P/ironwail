@@ -22,8 +22,8 @@
  *
  */
 
-#include "quakedef.h"
-#include "snd_codec.h"
+#include "../../quakedef.h"
+#include "codec.h"
 #include "bgmusic.h"
 
 #define MUSIC_DIRNAME	"music"
@@ -72,12 +72,12 @@ static music_handler_t *music_handlers = NULL;
 #define CDRIP_TYPES	(CODECTYPE_VORBIS | CODECTYPE_MP3 | CODECTYPE_FLAC | CODECTYPE_WAV | CODECTYPE_OPUS)
 #define CDRIPTYPE(x)	(((x) & CDRIP_TYPES) != 0)
 
-static snd_stream_t *bgmstream = NULL;
+snd_stream_t *bgmstream = NULL;
 
 static void BGM_Play_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		BGM_Play (Cmd_Argv(1));
+		snd_dma_BGM_Play (Cmd_Argv(1));
 	}
 	else {
 		if (bgmstream)
@@ -89,16 +89,6 @@ static void BGM_Play_f (void)
 		else
 			Con_Printf ("music <musicfile>\n");
 	}
-}
-
-static void BGM_Pause_f (void)
-{
-	BGM_Pause ();
-}
-
-static void BGM_Resume_f (void)
-{
-	BGM_Resume ();
 }
 
 static void BGM_Loop_f (void)
@@ -122,11 +112,6 @@ static void BGM_Loop_f (void)
 		Con_Printf("Music will not be looped\n");
 }
 
-static void BGM_Stop_f (void)
-{
-	BGM_Stop();
-}
-
 static void BGM_Jump_f (void)
 {
 	if (Cmd_Argc() != 2) {
@@ -137,17 +122,17 @@ static void BGM_Jump_f (void)
 	}
 }
 
-qboolean BGM_Init (void)
+qboolean snd_dma_BGM_Init (void)
 {
 	music_handler_t *handlers = NULL;
 	int i;
 
 	Cvar_RegisterVariable(&bgm_extmusic);
 	Cmd_AddCommand("music", BGM_Play_f);
-	Cmd_AddCommand("music_pause", BGM_Pause_f);
-	Cmd_AddCommand("music_resume", BGM_Resume_f);
+	Cmd_AddCommand("music_pause", snd_dma_BGM_Pause);
+	Cmd_AddCommand("music_resume", snd_dma_BGM_Resume);
 	Cmd_AddCommand("music_loop", BGM_Loop_f);
-	Cmd_AddCommand("music_stop", BGM_Stop_f);
+	Cmd_AddCommand("music_stop", snd_dma_BGM_Stop);
 	Cmd_AddCommand("music_jump", BGM_Jump_f);
 
 	if (COM_CheckParm("-noextmusic") != 0)
@@ -188,9 +173,9 @@ qboolean BGM_Init (void)
 	return true;
 }
 
-void BGM_Shutdown (void)
+void snd_dma_BGM_Shutdown (void)
 {
-	BGM_Stop();
+	snd_dma_BGM_Stop();
 /* sever our connections to
  * midi_drv and snd_codec */
 	music_handlers = NULL;
@@ -236,13 +221,13 @@ static void BGM_Play_noext (const char *filename, unsigned int allowed_types)
 	Con_Printf("Couldn't handle music file %s\n", filename);
 }
 
-void BGM_Play (const char *filename)
+void snd_dma_BGM_Play (const char *filename)
 {
 	char tmp[MAX_QPATH];
 	const char *ext;
 	music_handler_t *handler;
 
-	BGM_Stop();
+	snd_dma_BGM_Stop();
 
 	if (music_handlers == NULL)
 		return;
@@ -292,7 +277,7 @@ void BGM_Play (const char *filename)
 	Con_Printf("Couldn't handle music file %s\n", filename);
 }
 
-void BGM_PlayCDtrack (byte track, qboolean looping)
+void snd_dma_BGM_PlayCDtrack (byte track, qboolean looping)
 {
 /* instead of searching by the order of music_handlers, do so by
  * the order of searchpath priority: the file from the searchpath
@@ -306,7 +291,7 @@ void BGM_PlayCDtrack (byte track, qboolean looping)
 	unsigned int path_id, prev_id, type;
 	music_handler_t *handler;
 
-	BGM_Stop();
+	snd_dma_BGM_Stop();
 	if (CDAudio_Play(track, looping) == 0)
 		return;			/* success */
 
@@ -351,7 +336,7 @@ void BGM_PlayCDtrack (byte track, qboolean looping)
 	}
 }
 
-void BGM_Stop (void)
+void snd_dma_BGM_Stop (void)
 {
 	if (bgmstream)
 	{
@@ -362,7 +347,7 @@ void BGM_Stop (void)
 	}
 }
 
-void BGM_Pause (void)
+void snd_dma_BGM_Pause (void)
 {
 	if (bgmstream)
 	{
@@ -371,7 +356,7 @@ void BGM_Pause (void)
 	}
 }
 
-void BGM_Resume (void)
+void snd_dma_BGM_Resume (void)
 {
 	if (bgmstream)
 	{
@@ -441,7 +426,7 @@ static void BGM_UpdateStream (void)
 				if (did_rewind)
 				{
 					Con_Printf("Stream keeps returning EOF.\n");
-					BGM_Stop();
+					snd_dma_BGM_Stop();
 					return;
 				}
 
@@ -449,27 +434,27 @@ static void BGM_UpdateStream (void)
 				if (res != 0)
 				{
 					Con_Printf("Stream seek error (%i), stopping.\n", res);
-					BGM_Stop();
+					snd_dma_BGM_Stop();
 					return;
 				}
 				did_rewind = true;
 			}
 			else
 			{
-				BGM_Stop();
+				snd_dma_BGM_Stop();
 				return;
 			}
 		}
 		else	/* res < 0: some read error */
 		{
 			Con_Printf("Stream read error (%i), stopping.\n", res);
-			BGM_Stop();
+			snd_dma_BGM_Stop();
 			return;
 		}
 	}
 }
 
-void BGM_Update (void)
+void snd_dma_BGM_Update (void)
 {
 	if (old_volume != bgmvolume.value)
 	{
@@ -482,4 +467,3 @@ void BGM_Update (void)
 	if (bgmstream)
 		BGM_UpdateStream ();
 }
-

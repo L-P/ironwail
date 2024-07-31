@@ -21,12 +21,12 @@
  *
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_OPUS)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_opus.h"
+#include "codec.h"
+#include "codeci.h"
+#include "opus.h"
 
 #include <errno.h>
 #include <opusfile.h>

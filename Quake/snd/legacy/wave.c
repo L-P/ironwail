@@ -22,12 +22,12 @@
  *
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_WAVE)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_wave.h"
+#include "codec.h"
+#include "codeci.h"
+#include "wave.h"
 
 /*
 =================

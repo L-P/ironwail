@@ -108,8 +108,6 @@ void S_TouchSound (const char *sample);
 void S_ClearPrecache (void);
 void S_BeginPrecaching (void);
 void S_EndPrecaching (void);
-void S_PaintChannels (int endtime);
-void S_InitPaintChannels (void);
 
 /* picks a channel based on priorities, empty slots, number of channels */
 channel_t *SND_PickChannel (int entnum, int entchannel);
@@ -169,9 +167,7 @@ extern	vec3_t		listener_right;
 extern	vec3_t		listener_up;
 
 extern	cvar_t		sndspeed;
-extern	cvar_t		snd_mixspeed;
 extern	cvar_t		snd_filterquality;
-extern	cvar_t		sfxvolume;
 extern	cvar_t		loadas8bit;
 
 #define	MAX_RAW_SAMPLES	8192
@@ -180,7 +176,6 @@ extern	portable_samplepair_t	s_rawsamples[MAX_RAW_SAMPLES];
 extern	cvar_t		bgmvolume;
 
 void S_LocalSound (const char *name);
-sfxcache_t *S_LoadSound (sfx_t *s);
 
 wavinfo_t GetWavinfo (const char *name, byte *wav, int wavlength);
 

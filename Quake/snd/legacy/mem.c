@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // snd_mem.c: sound caching
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 /*
 ================
@@ -87,12 +87,7 @@ static void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
 
 //=============================================================================
 
-/*
-==============
-S_LoadSound
-==============
-*/
-sfxcache_t *S_LoadSound (sfx_t *s)
+sfxcache_t *snd_mem_load_sound (sfx_t *s)
 {
 	char	namebuffer[256];
 	byte	*data;

@@ -28,16 +28,14 @@
 extern qboolean	bgmloop;
 extern cvar_t	bgm_extmusic;
 
-qboolean BGM_Init (void);
-void BGM_Shutdown (void);
-
-void BGM_Play (const char *filename);
-void BGM_Stop (void);
-void BGM_Update (void);
-void BGM_Pause (void);
-void BGM_Resume (void);
-
-void BGM_PlayCDtrack (byte track, qboolean looping);
+qboolean snd_dma_BGM_Init (void);
+void snd_dma_BGM_Shutdown (void);
+void snd_dma_BGM_Play (const char *filename);
+void snd_dma_BGM_Stop (void);
+void snd_dma_BGM_Update (void);
+void snd_dma_BGM_Pause (void);
+void snd_dma_BGM_Resume (void);
+void snd_dma_BGM_PlayCDtrack (byte track, qboolean looping);
 
 #endif	/* _BGMUSIC_H_ */
 

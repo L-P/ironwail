@@ -22,12 +22,12 @@
  *
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_FLAC)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_flac.h"
+#include "codec.h"
+#include "codeci.h"
+#include "flac.h"
 
 #undef LEGACY_FLAC
 #include <FLAC/stream_decoder.h>

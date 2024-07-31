@@ -21,7 +21,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // snd_mix.c -- portable code to mix sounds for snd_dma.c
 
-#include "quakedef.h"
+#include "../../quakedef.h"
+
+#include "../iface.h"
+
+sfxcache_t *snd_mem_load_sound (sfx_t *s);
 
 #define	PAINTBUFFER_SIZE	2048
 portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
@@ -345,7 +349,7 @@ static struct {
 
 extern cvar_t snd_waterfx;
 
-void S_SetUnderwaterIntensity (float target)
+void snd_mix_S_SetUnderwaterIntensity (float target)
 {
 	target *= CLAMP (0.f, snd_waterfx.value, 2.f);
 	if (underwater.intensity < target)
@@ -393,7 +397,7 @@ CHANNEL MIXING
 static void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int endtime, int paintbufferstart);
 static void SND_PaintChannelFrom16 (channel_t *ch, sfxcache_t *sc, int endtime, int paintbufferstart);
 
-void S_PaintChannels (int endtime)
+void snd_mix_S_PaintChannels (int endtime)
 {
 	int		i;
 	int		end, ltime, count;
@@ -420,7 +424,7 @@ void S_PaintChannels (int endtime)
 				continue;
 			if (!ch->leftvol && !ch->rightvol)
 				continue;
-			sc = S_LoadSound (ch->sfx);
+			sc = snd_mem_load_sound (ch->sfx);
 			if (!sc)
 				continue;
 

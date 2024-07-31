@@ -23,20 +23,20 @@
  *
  */
 
-#include "quakedef.h"
-#include "snd_codec.h"
-#include "snd_codeci.h"
+#include "../../quakedef.h"
+#include "codec.h"
+#include "codeci.h"
 
 /* headers for individual codecs */
-#include "snd_mikmod.h"
-#include "snd_modplug.h"
-#include "snd_xmp.h"
-#include "snd_umx.h"
-#include "snd_wave.h"
-#include "snd_flac.h"
-#include "snd_mp3.h"
-#include "snd_vorbis.h"
-#include "snd_opus.h"
+#include "mikmod.h"
+#include "modplug.h"
+#include "xmp.h"
+#include "umx.h"
+#include "wave.h"
+#include "flac.h"
+#include "mp3.h"
+#include "vorbis.h"
+#include "opus.h"
 
 
 static snd_codec_t *codecs;

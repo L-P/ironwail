@@ -24,12 +24,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_MP3)
-#include "snd_codec.h"
-#include "snd_codeci.h"
-#include "snd_mp3.h"
+#include "codec.h"
+#include "codeci.h"
+#include "mp3.h"
 #include <mad.h>
 
 /* Under Windows, importing data from DLLs is a dicey proposition. This is true

@@ -119,11 +119,11 @@ $(error Invalid MP3LIB setting)
 endif
 endif
 ifeq ($(MP3LIB),mad)
-mp3_obj=snd_mp3
+mp3_obj=mp3
 lib_mp3dec=-lmad
 endif
 ifeq ($(MP3LIB),mpg123)
-mp3_obj=snd_mpg123
+mp3_obj=mpg123
 lib_mp3dec=-lmpg123
 endif
 ifeq ($(VORBISLIB),vorbis)
@@ -190,20 +190,22 @@ MAKEFILE := $(lastword $(MAKEFILE_LIST))
 # objects
 # ---------------------------
 
-MUSIC_OBJS= bgmusic.o \
-	snd_codec.o \
-	snd_flac.o \
-	snd_wave.o \
-	snd_vorbis.o \
-	snd_opus.o \
-	$(mp3_obj).o \
-	snd_mp3tag.o \
-	snd_mikmod.o \
-	snd_modplug.o \
-	snd_xmp.o \
-	snd_umx.o
-COMOBJ_SND = snd_dma.o snd_mix.o snd_mem.o $(MUSIC_OBJS)
-SYSOBJ_SND = snd_sdl.o
+MUSIC_OBJS= \
+	snd/iface.o \
+	snd/legacy/bgmusic.o \
+	snd/legacy/codec.o \
+	snd/legacy/flac.o \
+	snd/legacy/wave.o \
+	snd/legacy/vorbis.o \
+	snd/legacy/opus.o \
+	snd/legacy/$(mp3_obj).o \
+	snd/legacy/mp3tag.o \
+	snd/legacy/mikmod.o \
+	snd/legacy/modplug.o \
+	snd/legacy/xmp.o \
+	snd/legacy/umx.o
+COMOBJ_SND = snd/legacy/dma.o snd/legacy/mix.o snd/legacy/mem.o $(MUSIC_OBJS)
+SYSOBJ_SND = snd/legacy/sdl.o
 SYSOBJ_CDA = cd_sdl.o
 SYSOBJ_INPUT = in_sdl.o
 SYSOBJ_GL_VID= gl_vidsdl.o

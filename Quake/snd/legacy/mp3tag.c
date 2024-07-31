@@ -17,11 +17,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "quakedef.h"
+#include "../../quakedef.h"
 
 #if defined(USE_CODEC_MP3)
-#include "snd_codec.h"
-#include "q_ctype.h"
+#include "codec.h"
+#include "../../q_ctype.h"
 
 static inline qboolean is_id3v1(const unsigned char *data, long length) {
     /* http://id3.org/ID3v1 :  3 bytes "TAG" identifier and 125 bytes tag data */
